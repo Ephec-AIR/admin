@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AIR - Admin</title>
+        <meta charset=utf-8>
+        <style>
+            input[type=checkbox] {
+                position: relative;
+                top: 2px;
+            }
+        </style>
+        <script type=text/javascript src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script type=text/javascript src="jwt-decode.min.js"></script>
+        <script type=text/javascript>
+            const DOM = {};
+            const user = {};
+            function clear(obj) {
+                for (k in obj)
+                    delete obj[k];
+            }
+            function showLogin() {
+                DOM.flogin.removeAttribute("hidden");
+                DOM.fprofile.setAttribute("hidden", "true");
+                DOM.faddocr.setAttribute("hidden", "true");
+            }
+            function hideLogin() {
+                DOM.flogin.setAttribute("hidden", "true");
+                DOM.fprofile.removeAttribute("hidden");
+                DOM.faddocr.removeAttribute("hidden");
+            }
+            function submit_flogin(evt) {
+                const data = JSON.stringify({
+                    username: DOM.flogin.login,
+                    password: DOM.flogin.password
+                });
+                const headers = new Headers();
+                headers.append("Content-Type", "application/json;charset=utf-8");
+                headers.append("Content-Length", data.length.toString());
+                fetch("https://air.ephec-ti.org/api/v1/login", {
+                    method: "POST",
+                    headers,
+                    data
+                }).then(res => {
+                    return res.json()
+                }).then(json => {
+                    user["token"] = json["token"];
+                    const obj = jwt_decode(user["token"]);
+                    for (k in obj)
+
+
+                })
+
+fetch('flowers.jpg',myInit)
+.then(function(response) {
+  return response.blob();
+})
+.then(function(myBlob) {
+  var objectURL = URL.createObjectURL(myBlob);
+  myImage.src = objectURL;
+});
+            }
+            function main() {
+                window.removeEventListener("load", main);
+                DOM.flogin = document.getElementById("flogin");
+                DOM.fprofile = document.getElementById("fprofile");
+                DOM.faddocr = document.getElementById("faddocr");
+
+                DOM.flogin.onsubmit = submit_flogin;
+            }
+            window.addEventListener("load", main);
+        </script>
+    </head>
+    <body>
+        <form id=flogin hidden>
+            <fieldset>
+                <legend>Login</legend>
+                <p>
+                    <label for=login>Username/Email: </label>
+                    <input type=text name=login required>
+                </p>
+                <p>
+                    <label for=password>Password: </label>
+                    <input type=password name=password required>
+                </p>
+                <p>
+                    <input type=submit value="Se connecter">
+                </p>
+            </fieldset>
+        </form>
+        <form id=fprofile>
+            <fieldset>
+                <legend>Profile</legend>
+                <p>
+                    <label for=login>Connecté en temps que: </label>
+                    <input type=text name=login readonly>
+                </p>
+                <p>
+                    <label for=isadmin>Admin ? </label>
+                    <input type=checkbox disabled>
+                </p>
+                <p>
+                    <input type=submit value="Se déconnecter">
+                </p>
+            </fieldset>
+        </form>
+        <form id=faddocr hidden>
+            <fieldset>
+                <legend>Créer un OCR</legend>
+                <p>
+                    <input type=submit value="Créer">
+                </p>
+                <p>
+                    <label for=serial>Serial:</label>
+                    <input type=text name=serial readonly>
+                </p>
+                <p>
+                    <label for=ocr_secret>OCR Secret:</label>
+                    <input type=text name=ocr_secret readonly>
+                </p>
+                <p>
+                    <label for=user_secret>User Secret:</label>
+                    <input type=text name=user_secret readonly>
+                </p>
+            </fieldset>
+        </form>
+    </body>
+</html>
