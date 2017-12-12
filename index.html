@@ -11,67 +11,10 @@
         </style>
         <script type=text/javascript src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type=text/javascript src="jwt-decode.min.js"></script>
-        <script type=text/javascript>
-            const DOM = {};
-            const user = {};
-            function clear(obj) {
-                for (k in obj)
-                    delete obj[k];
-            }
-            function showLogin() {
-                DOM.flogin.removeAttribute("hidden");
-                DOM.fprofile.setAttribute("hidden", "true");
-                DOM.faddocr.setAttribute("hidden", "true");
-            }
-            function hideLogin() {
-                DOM.flogin.setAttribute("hidden", "true");
-                DOM.fprofile.removeAttribute("hidden");
-                DOM.faddocr.removeAttribute("hidden");
-            }
-            function submit_flogin(evt) {
-                const data = JSON.stringify({
-                    username: DOM.flogin.login,
-                    password: DOM.flogin.password
-                });
-                const headers = new Headers();
-                headers.append("Content-Type", "application/json;charset=utf-8");
-                headers.append("Content-Length", data.length.toString());
-                fetch("https://air.ephec-ti.org/api/v1/login", {
-                    method: "POST",
-                    headers,
-                    data
-                }).then(res => {
-                    return res.json()
-                }).then(json => {
-                    user["token"] = json["token"];
-                    const obj = jwt_decode(user["token"]);
-                    for (k in obj)
-
-
-                })
-
-fetch('flowers.jpg',myInit)
-.then(function(response) {
-  return response.blob();
-})
-.then(function(myBlob) {
-  var objectURL = URL.createObjectURL(myBlob);
-  myImage.src = objectURL;
-});
-            }
-            function main() {
-                window.removeEventListener("load", main);
-                DOM.flogin = document.getElementById("flogin");
-                DOM.fprofile = document.getElementById("fprofile");
-                DOM.faddocr = document.getElementById("faddocr");
-
-                DOM.flogin.onsubmit = submit_flogin;
-            }
-            window.addEventListener("load", main);
-        </script>
+        <script type=text/javascript src="main.js"></script>
     </head>
     <body>
-        <form id=flogin hidden>
+        <form id=flogin>
             <fieldset>
                 <legend>Login</legend>
                 <p>
@@ -87,7 +30,7 @@ fetch('flowers.jpg',myInit)
                 </p>
             </fieldset>
         </form>
-        <form id=fprofile>
+        <form id=fprofile hidden>
             <fieldset>
                 <legend>Profile</legend>
                 <p>
